@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>מלאי</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f2f2f2;
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 30px;
+        color: #3498db;
+      }
+
+      form {
+        max-width: 400px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+      }
+
+      select,
+      input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      button {
+        background-color: #3498db;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      #addedItems {
+        max-width: 400px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      #itemsList {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      #itemsList li {
+        margin-bottom: 8px;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>מלאי</h1>
+    <form id="addItemForm">
+      <label for="itemSelect">בחר פריט:</label>
+      <select id="itemSelect" name="itemSelect">
+        <option value="">בחר פריט</option>
+        <option value="#1 סט גוד לבנים +13+הכל">סט גוד לבנים +13+הכל</option>
+        <option value="#2 סט אנגליק +13+הכל">סט אנגליק +13+הכל</option>
+        <option value="#3 סט דימוניק +13+הכל">סט דימוניק +13+הכל</option>
+        <option value="#4 סט אולימפיק לבנים +13+הכל">
+          סט אולימפיק לבנים +13+הכל
+        </option>
+        <option value="#5 סט זאוס +13+הכל">סט זאוס +13+הכל</option>
+        <option value="#6 סט פיראט אפל לבנים +13+הכל">
+          סט פיראט אפל לבנים +13+הכל
+        </option>
+        <option value="#7 סט בלאק סניפר לבנים +13+הכל">
+          סט בלאק סניפר לבנים +13+הכל
+        </option>
+        <option value="#8 סט אביר מתנקש +13+הכל">סט אביר מתנקש +13+הכל</option>
+        <option value="#9 סט שלג לבנים +13+הכל">סט שלג לבנים +13+הכל</option>
+        <option value="#10 סט סמוראי +13+הכל">סט סמוראי +13+הכל</option>
+        <option value="#11 סט פרעה לבנים +13+הכל">סט פרעה לבנים +13+הכל</option>
+        <option value="#12 סט אוסיריס +13+הכל">סט אוסיריס +13+הכל</option>
+      </select>
+      <label for="customItem">או הזן פריט מותאם:</label>
+      <input type="text" id="customItem" name="customItem" />
+      <button type="button" onclick="addItem()">הוסף פריט</button>
+    </form>
+    <div id="addedItems">
+      <h2>פריטים שנוספו:</h2>
+      <ul id="itemsList"></ul>
+    </div>
+    <script>
+      function addItem() {
+        var select = document.getElementById("itemSelect");
+        var customInput = document.getElementById("customItem");
+        var selectedItem = select.options[select.selectedIndex].value;
+        if (!selectedItem && customInput.value.trim() !== "") {
+          selectedItem = customInput.value.trim();
+        }
+        if (selectedItem) {
+          var storedItems = JSON.parse(localStorage.getItem("items")) || [];
+          storedItems.push(selectedItem);
+          localStorage.setItem("items", JSON.stringify(storedItems));
+          displayItems();
+        }
+      }
+      function displayItems() {
+        var itemsList = document.getElementById("itemsList");
+        var storedItems = JSON.parse(localStorage.getItem("items")) || [];
+        itemsList.innerHTML = "";
+        storedItems.forEach(function (item) {
+          var listItem = document.createElement("li");
+          listItem.textContent = item;
+          itemsList.appendChild(listItem);
+        });
+      }
+      displayItems();
+    </script>
+  </body>
+</html>
